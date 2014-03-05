@@ -10,10 +10,11 @@ public class HttpContent {
 
 	private String contentType;
 	private String charSet;
-	private Map<String, String> header;
-	private Map<String, String> requestDataMap;
-	private String requestEntityData;
-	private Map<String, String> credentials;
+	private Map<String, String> header; 
+	private Map<String, String> requestDataMap; //set parameter value
+	private String requestEntityData; //set Request body data
+	private String username; 
+	private String password;
 	
 	public HttpContent() {
 		
@@ -65,21 +66,20 @@ public class HttpContent {
 		this.requestEntityData = requestEntityData;
 	}
 
-	public Map<String, String> getCredentials() {
-		return credentials;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setCredentials(Map<String, String> credentials) {
-		this.credentials = credentials;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	@Override
-	public String toString() {
-		return "HttpContent [contentType=" + contentType + ", charSet="
-				+ charSet + ", header=" + header + ", requestDataMap="
-				+ requestDataMap + ", requestEntityData=" + requestEntityData
-				+ ", credentials=" + credentials + "]";
+	public String getPassword() {
+		return password;
 	}
-	
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 }

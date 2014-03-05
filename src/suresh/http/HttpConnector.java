@@ -1,9 +1,5 @@
 package suresh.http;
 
-import suresh.http.HttpConstant.HttpMethod;
-import suresh.http.dataobject.HttpConnectorResponse;
-import suresh.http.dataobject.HttpContent;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -24,6 +20,10 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
+
+import suresh.http.HttpConstant.HttpMethod;
+import suresh.http.dataobject.HttpConnectorResponse;
+import suresh.http.dataobject.HttpContent;
 
 /**
  * Protocol connector for http communication.
@@ -167,17 +167,8 @@ public class HttpConnector implements AbstractHttpConnector {
 			try {
 				if (content == null)
 					return; 
-				if(content.getCredentials() !=null && !content.getCredentials().isEmpty()) {
-					if(content.getCredentials().size()>1)
-						throw new HttpException("Credential should not be set more than one.");
-					Iterator<String> itr = content.getCredentials().keySet().iterator();
-					String key = null;
-					String password = null;
-					while (itr.hasNext()) {
-						key = itr.next();
-						password = content.getCredentials().get(key);
-					}
-					Credentials defaultcreds = new UsernamePasswordCredentials(key, password);
+				if(content.getUsername() !=null && content.getUsername() != null) {
+					Credentials defaultcreds = new UsernamePasswordCredentials(content.getUsername(), content.getPassword());
 					httpClient.getState().setCredentials(AuthScope.ANY, defaultcreds);	
 				}
 				if (content.getContentType() != null)
@@ -196,7 +187,7 @@ public class HttpConnector implements AbstractHttpConnector {
 					if(content.getRequestEntityData()!=null)
 						post.setRequestEntity(new StringRequestEntity(content.getRequestEntityData(), content.getContentType(), content.getCharSet()));
 					if(param!=null && !param.isEmpty())
-						post.addParameters(param.toArray(new NameValuePair[param.size()]));
+						post.setQueryString(param.toArray(new NameValuePair[param.size()]));
 				} else 
 					method.setQueryString(param.toArray(new NameValuePair[param.size()]));
 			} catch (UnsupportedEncodingException e) {

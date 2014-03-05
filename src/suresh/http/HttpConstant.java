@@ -15,4 +15,5 @@ public class HttpConstant {
 	}
 	
 	public static final String CONTENT_TYPE_PARAM = "Content-Type";
+	public static final String UTF_8 = "UTF-8";
 }
