@@ -188,6 +188,16 @@ public class HttpConnector implements AbstractHttpConnector {
 						post.setRequestEntity(new StringRequestEntity(content.getRequestEntityData(), content.getContentType(), content.getCharSet()));
 					if(param!=null && !param.isEmpty())
 						post.setQueryString(param.toArray(new NameValuePair[param.size()]));
+				} else if(method.getName().equals(HttpMethod.DELETE.name())){
+					DeleteMethod delete = (DeleteMethod) method;
+					if(param!=null && !param.isEmpty())
+						delete.setQueryString(param.toArray(new NameValuePair[param.size()]));
+				} else if(method.getName().equals(HttpMethod.PUT.name())){
+					PutMethod put = (PutMethod) method;
+					if(content.getRequestEntityData()!=null)
+						put.setRequestEntity(new StringRequestEntity(content.getRequestEntityData(), content.getContentType(), content.getCharSet()));
+					if(param!=null && !param.isEmpty())
+						put.setQueryString(param.toArray(new NameValuePair[param.size()]));
 				} else 
 					method.setQueryString(param.toArray(new NameValuePair[param.size()]));
 			} catch (UnsupportedEncodingException e) {
